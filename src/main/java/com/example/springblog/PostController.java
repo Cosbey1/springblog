@@ -1,6 +1,7 @@
 package com.example.springblog;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -17,9 +18,11 @@ public class PostController {
 //    }
 
     @GetMapping("/posts")
-    public String posts() {
+    public String posts(Model model) {
+       model.addAttribute("posts",postDao.findAll());
         return "posts/index";
     }
+
 
 //    @GetMapping("posts/{id}")
 //    @ResponseBody
@@ -41,6 +44,8 @@ public class PostController {
 
     @PostMapping("posts/create")
     public String post(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body){
+        Post post = new Post(title, body);
+        postDao.save(post);
         return "redirect:/posts";
     }
 
