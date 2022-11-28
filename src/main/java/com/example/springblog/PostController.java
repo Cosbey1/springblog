@@ -1,36 +1,48 @@
 package com.example.springblog;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PostController {
-
-    @GetMapping("/posts")
-    @ResponseBody
-    public String posts() {
-        return "post goes here";
+    private final PostRepository postDao;
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
     }
 
+//    @GetMapping("/posts")
+//    @ResponseBody
+//    public String posts() {
+//        return "post goes here";
+//    }
+
+    @GetMapping("/posts")
+    public String posts() {
+        return "posts/index";
+    }
+
+//    @GetMapping("posts/{id}")
+//    @ResponseBody
+//    public String individual(@PathVariable String id){
+//        return "here is " + id + "'s individual post";
+//    }
+
     @GetMapping("posts/{id}")
-    @ResponseBody
     public String individual(@PathVariable String id){
-        return "here is " + id + "'s individual post";
+
+        return "posts/show";
     }
 
     @GetMapping("posts/create")
-    @ResponseBody
     public String create() {
-        return "here is a form to create a post";
+
+        return "posts/create";
     }
 
     @PostMapping("posts/create")
-    @ResponseBody
-    public String post(){
-        return "you created a post";
+    public String post(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body){
+        return "redirect:/posts";
     }
+
 
 }
