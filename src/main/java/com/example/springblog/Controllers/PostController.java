@@ -25,22 +25,50 @@ public class PostController {
         return "posts/index";
     }
 
-    @GetMapping("posts/{id}")
+    @GetMapping("/posts/{id}")
     public String individual(@PathVariable long id, Model model) {
         model.addAttribute("posts",postDao.getReferenceById(id));
         return "posts/show";
     }
 
-    @GetMapping("posts/create")
-    public String create() {
+//    @GetMapping("posts/create")
+//    public String create() {
+//
+//        return "posts/create";
+//    }
 
+    @GetMapping("/posts/create")
+    public String create(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
-    @PostMapping("posts/create")
-    public String post(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body) {
-        Post post = new Post(title, body);
-        post.setUser((User) userDao.getReferenceById(1L));
+//    @PostMapping("posts/create")
+//    public String post(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body) {
+//        Post post = new Post(title, body);
+//        post.setUser((User) userDao.getReferenceById(1L));
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
+
+    @PostMapping("/posts/create")
+    public  String create(@ModelAttribute Post post) {
+       User user = userDao.getReferenceById(1L);
+        post.setUser(user);
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/{id}/edit")
+    public String edit(@PathVariable Long id, Model model) {
+    model.addAttribute("post", postDao.getReferenceById(id));
+    return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String edit(@ModelAttribute Post post) {
+        User user = userDao.getReferenceById(1L);
+        post.setUser(user);
         postDao.save(post);
         return "redirect:/posts";
     }
