@@ -1,9 +1,7 @@
 package com.example.springblog.Repositories;
 
-import com.example.springblog.User;
+import com.example.springblog.Classes.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import javax.persistence.Table;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

@@ -1,4 +1,6 @@
-package com.example.springblog;
+package com.example.springblog.Classes;
+
+import com.example.springblog.Classes.Post;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,9 +1,10 @@
 package com.example.springblog.Controllers;
 
-import com.example.springblog.Post;
+import com.example.springblog.Classes.EmailService;
+import com.example.springblog.Classes.Post;
 import com.example.springblog.Repositories.PostRepository;
 import com.example.springblog.Repositories.UserRepository;
-import com.example.springblog.User;
+import com.example.springblog.Classes.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,13 @@ public class PostController {
     private final PostRepository postDao;
     private final UserRepository userDao;
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+    private final EmailService emailService;
+
+
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
 
@@ -72,6 +77,8 @@ public class PostController {
         postDao.save(post);
         return "redirect:/posts";
     }
+
+
 
 
 }
